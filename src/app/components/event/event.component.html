@@ -1,0 +1,19 @@
+<div class="event">
+  <ng-container *ngIf="!editMode">
+    <div class="event-info">{{ event.name }}</div>
+    <div class="event-info">{{ event.type }}</div>
+    <div class="event-info">{{ event.duration }} hours</div>
+    <button (click)="toggleEditMode()">Edit</button>
+    <button (click)="onDelete()">Delete</button>
+  </ng-container>
+  <ng-container *ngIf="editMode">
+    <input [(ngModel)]="event.name" placeholder="Назва події">
+    <select [(ngModel)]="event.type">
+      <option value="holiday">Holiday</option>
+      <option value="non-holiday">Other</option>
+    </select>
+    <input [(ngModel)]="event.duration" placeholder="Тривалість (год)">
+    <button (click)="onSave()">Save</button>
+    <button (click)="toggleEditMode()">Cancel</button>
+  </ng-container>
+</div>

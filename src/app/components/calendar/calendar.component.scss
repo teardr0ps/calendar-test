@@ -1,0 +1,111 @@
+.calendar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+
+    button {
+      height: 25px;
+    }
+  }
+
+  .view-mode {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    button {
+      margin-right: 1rem;
+    }
+
+    button.active {
+      font-weight: bold;
+    }
+  }
+
+  .days {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1000px;
+
+    .day {
+      width: 130px;
+      border: 1px solid #ccc;
+      margin-bottom: 1rem;
+      height: 190px;
+      cursor: pointer;
+      overflow: auto;
+
+      .day-header {
+        background-color: #f0f0f0;
+        padding: 0.5rem;
+        text-align: center;
+      }
+
+      .events {
+        padding: 0.5rem;
+      }
+    }
+
+    .day-disabled {
+      pointer-events: none;
+
+      .day-header {
+        background-color: gray;
+      }
+    }
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input, select {
+      padding: 5px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    button {
+      padding: 5px;
+      cursor: pointer;
+      background-color: #007bff;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      margin-top: 10px;
+      width: fit-content;
+      align-self: flex-end;
+    }
+  }
+}

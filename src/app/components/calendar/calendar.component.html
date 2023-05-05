@@ -1,0 +1,81 @@
+<div class="calendar">
+  <div class="header">
+    <button (click)="previousPeriod()">Prev</button>
+    <h1>{{ viewMode === 'month' ? currentDate.format('MMMM YYYY') : currentDate.format('DD MMMM') + ' - ' + currentDate.clone().add(6, 'days').format('DD MMMM YYYY') }}</h1>
+    <button (click)="nextPeriod()">Next</button>
+  </div>
+  <div class="view-mode">
+    <button (click)="changeViewMode('month')" [class.active]="viewMode === 'month'">Month</button>
+    <button (click)="changeViewMode('week')" [class.active]="viewMode === 'week'">Week</button>
+  </div>
+
+  <div class="days">
+    <div
+      class="day"
+      *ngFor="let day of daysInView; let i = index;"
+      (click)="!day.events.length ? onDayClick(day) : null"
+      [ngClass]="{'day-disabled': !day.isCurrentMonth}"
+    >
+      <div class="day-header">
+        {{ day.date.format('D') }}
+      </div>
+      <div class="events" *ngIf="day.events.length; else addEvent">
+        <app-event *ngFor="let event of day.events" [event]="event" (delete)="deleteEventFromLocalStorage(event)"></app-event>
+      </div>
+      <ng-template #addEvent>
+<!--        <button (click)="onDayClick(day)">Add event</button>-->
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно для добавления события -->
+<div class="modal" *ngIf="isModalOpen">
+  <div class="modal-content">
+    <h2>Add event</h2>
+    <form [formGroup]="addEventForm" (ngSubmit)="onSubmit()">
+      <label for="eventName">Event Name</label>
+      <input id="eventName" type="text" formControlName="eventName" required />
+      <small
+        style="color: red;"
+        *ngIf="addEventForm.get('eventName')?.invalid"
+      >
+        Event name cant be empty.
+      </small>
+
+      <label for="eventType">Event Type</label>
+      <select id="eventType" formControlName="eventType">
+        <option value="holiday">Holiday</option>
+        <option value="other">Other</option>
+      </select>
+      <small
+        style="color: red;"
+        *ngIf="addEventForm.get('eventType')?.invalid"
+      >
+        Event type cant be empty.
+      </small>
+
+      <label for="eventDuration">Duration (hours)</label>
+      <input id="eventDuration" type="number" formControlName="eventDuration" required />
+      <small
+        style="color: red;"
+        *ngIf="addEventForm.get('eventDuration')?.invalid"
+      >
+        Event duration cant be empty.
+      </small>
+
+      <label for="eventDate">Event date</label>
+      <input id="eventDate" type="date" formControlName="eventDate" required />
+
+      <label for="eventRecurrence">Repeat</label>
+      <select id="eventRecurrence" formControlName="eventRecurrence">
+        <option value="none">Don't repeat</option>
+        <option value="weekly">Once a week</option>
+        <option value="monthly">Once a month</option>
+      </select>
+
+      <button type="submit" [disabled]="addEventForm.invalid">Add event</button>
+    </form>
+    <button (click)="closeModal()">Close</button>
+  </div>
+</div>
