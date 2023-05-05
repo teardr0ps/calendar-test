@@ -12,7 +12,7 @@
   <div class="days">
     <div
       class="day"
-      *ngFor="let day of daysInView; let i = index;"
+      *ngFor="let day of daysInView"
       (click)="!day.events.length ? onDayClick(day) : null"
       [ngClass]="{'day-disabled': !day.isCurrentMonth}"
     >
@@ -29,7 +29,6 @@
   </div>
 </div>
 
-<!-- Модальное окно для добавления события -->
 <div class="modal" *ngIf="isModalOpen">
   <div class="modal-content">
     <h2>Add event</h2>
